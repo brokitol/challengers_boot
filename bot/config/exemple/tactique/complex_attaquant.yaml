@@ -1,0 +1,20 @@
+---
+#draft de format simple ! Changement possible
+:nom: complex_attaquant
+:ligne:
+- :origin: moi
+  :comparaisont: <
+  :seuil: 15
+  :référence: vie
+  :action: soin
+  :cible: allié
+  # définition de la cible, voir tactique simple
+  # condition d'activation de la tactique
+  #     attaque ?
+  #     parade ?
+  #     vitesse ?
+  #     toucher ?
+  #     dps ?
+  #     soin ?
+- :origin: un advairsaire
+#...

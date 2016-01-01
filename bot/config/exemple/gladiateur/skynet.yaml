@@ -1,0 +1,119 @@
+---
+:login: draque
+:mdp: "***"
+:creation:
+  :create: 'true' # indique si le compte doit être crée dans le cas ou il n'existe pas
+  :mail: lala@la.la # mail utilisé pour le formulaire de création
+  :description: "une description" # nom donnée a la nouvelle ecurie
+  :message_forum:
+    :titre: 'teston' # titre du message
+    :message: 'test 1 2 1 2' # message posté sur le forum lors de la création
+:equipement:
+#contrainte d'achat des équipements
+:tournoi:
+#choix des équipes
+#paramètre de tactique de groupe ?
+:amélioration:
+  :ordre: # ordre dans le quels des amélio sont monté
+    :tactique: 2
+    :combattant: 1
+    :équipement: 3
+  :stockage:
+  # par default surement acheté un emplacement si un glad veux acheté un équipement mais que le coffre est plein
+  # inutile d'acheté sinon
+  :hebergement:
+  # definir les facteurs de décision pour l'achat d'un hébergement
+  # rien acheté d'autre ?
+  # acheté un hébergement après x credit dépensé en équipement ?
+  # acheté dès qu'on a les sous ? (risque de jamais les avoirs pour les derniers niveaux)
+:glad:
+#  le nom d'un glad est utilisé pour le retrouver
+#  les informations sont répartis en 2 catégorie
+#    création
+#     ces valeur sont utile uniquement a la création
+#    objectif
+#      ces valeur servent de repaires pour les dépenses (d'xp, d'argent ou autre)
+- :nom: test # nom du glad
+  :creation:
+      :gender: male # sex du glad a la creation
+    	:description: "ma description" # description du glad
+      :Temperament: prudent # tempérament du glad a la creation
+      :carac_privi: END # caractéristique privilégiée du glad
+      :bonus: entrainement # bonus de création (exemple : Survie)
+      :REF: 10 # valeur a la creation
+      :SOU: 10 # valeur a la creation
+      :PUI: 10 # valeur a la creation
+      :RES: 10 # valeur a la creation
+      :END: 10 # valeur a la creation
+      :ENE: 10 # valeur a la creation
+  :objectif:
+    :carac:
+      # attention, on parle des caracs naturel donc sans équipement
+      :ratio:
+        # obectif de ratios entre les caracétristiques
+        # 0 indique que la carac est ignoré 
+        # l'exemple actuel représente un soigneur
+        :REF: 1
+        :SOU: 0
+        :PUI: 0
+        :RES: 1
+        :END: 2
+        :ENE: 2
+      :min:
+        # valeur minimum de la carac. si la valeur réel est plus faible, elle est monté en priorité
+        :REF: 15
+        :SOU: 1
+        :PUI: 1
+        :RES: 15
+        :END: 20
+        :ENE: 20
+      :max:
+        # valeur maximum de la carac. la valeur ne sera pas monté plus haut
+        # pas de maximum si négatif
+        :REF: -1
+        :SOU: 1
+        :PUI: 1
+        :RES: -1
+        :END: -1
+        :ENE: 50
+    :equip:
+      # valeur avec les équipements
+      :ratio:
+        # obectif de ratios entre les caracétristiques
+        # 0 indique que la carac est ignoré 
+        # -1 indique que la carac peut être diminué (mais pas en-dessous de 1)
+        # l'exemple actuel représente un soigneur
+        :REF: 1
+        :SOU: 0
+        :PUI: -1
+        :RES: 1
+        :END: 2
+      :min:
+        # valeur minimum voulu pour la carac. si la valeur réel est plus faible, elle est monté en priorité
+        # 0 indique que la carac est ignoré 
+        :REF: 25
+        :SOU: 0
+        :PUI: 0
+        :RES: 25
+        :END: 30
+      :max:
+        # valeur maximum voulu de la carac. la valeur ne sera pas ignoré si elle atteint le maximum (et peut donc encore monté comme effet secondaire d'un équipement)
+        # pas de maximum si négatif
+        :REF: -1
+        :SOU: 1
+        :PUI: 1
+        :RES: -1
+        :END: -1
+    :comp:
+      #même chose que les carac mais avec les compétences
+      # TODO faire la liste des competences
+      :ratio:
+      :min:
+      :max:
+  :tactique:
+    # les tactiques seront dans un autre fichier
+    # ici seront les variables pour définir quels tactique utiliser
+  :mission:
+    # a voir
+- :nom: tost
+    #etc

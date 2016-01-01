@@ -1,0 +1,19 @@
+---
+#draft de format simple ! Changement possible
+:nom: simple_attaquant
+:ligne:
+- :origin: moi
+  :comparaisont: <
+  :seuil: 15
+  :référence: vie
+  :action: soin
+  :cible: allié
+  # comment définir la cible :
+  #     attaque ?
+  #     parade ?
+  #     vitesse ?
+  #     toucher ?
+  #     dps ?
+  #     soin ?
+- :origin: un advairsaire
+#...
