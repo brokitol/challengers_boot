@@ -1,0 +1,88 @@
+---
+#  ce fichier représente un format ? / modele ? de gladiateur
+#  les informations sont répartis en 2 catégorie
+#    création
+#     ces valeur sont utile uniquement a la création
+#    objectif
+#      ces valeur servent de repaires pour les dépenses (d'xp, d'argent ou autre)
+:creation:
+    :gender: male # sex du glad a la creation
+  	:description: "ma description" # description du glad
+    :Temperament: prudent # tempérament du glad a la creation
+    :carac_privi: END # caractéristique privilégiée du glad
+    :bonus: entrainement # bonus de création (exemple : Survie)
+    :REF: 10 # valeur a la creation
+    :SOU: 10 # valeur a la creation
+    :PUI: 10 # valeur a la creation
+    :RES: 10 # valeur a la creation
+    :END: 10 # valeur a la creation
+    :ENE: 10 # valeur a la creation
+:objectif:
+  :carac:
+    # attention, on parle des caracs naturel donc sans équipement
+    :ratio:
+      # obectif de ratios entre les caracétristiques
+      # 0 indique que la carac est ignoré 
+      # l'exemple actuel représente un soigneur
+      :REF: 1
+      :SOU: 0
+      :PUI: 0
+      :RES: 1
+      :END: 2
+      :ENE: 2
+    :min:
+      # valeur minimum de la carac. si la valeur réel est plus faible, elle est monté en priorité
+      :REF: 15
+      :SOU: 1
+      :PUI: 1
+      :RES: 15
+      :END: 20
+      :ENE: 20
+    :max:
+      # valeur maximum de la carac. la valeur ne sera pas monté plus haut
+      # pas de maximum si négatif
+      :REF: -1
+      :SOU: 1
+      :PUI: 1
+      :RES: -1
+      :END: -1
+      :ENE: 50
+  :equip:
+    # valeur avec les équipements
+    :ratio:
+      # obectif de ratios entre les caracétristiques
+      # 0 indique que la carac est ignoré 
+      # -1 indique que la carac peut être diminué (mais pas en-dessous de 1)
+      # l'exemple actuel représente un soigneur
+      :REF: 1
+      :SOU: 0
+      :PUI: -1
+      :RES: 1
+      :END: 2
+    :min:
+      # valeur minimum voulu pour la carac. si la valeur réel est plus faible, elle est monté en priorité
+      # 0 indique que la carac est ignoré 
+      :REF: 25
+      :SOU: 0
+      :PUI: 0
+      :RES: 25
+      :END: 30
+    :max:
+      # valeur maximum voulu de la carac. la valeur ne sera pas ignoré si elle atteint le maximum (et peut donc encore monté comme effet secondaire d'un équipement)
+      # pas de maximum si négatif
+      :REF: -1
+      :SOU: 1
+      :PUI: 1
+      :RES: -1
+      :END: -1
+  :comp:
+    #même chose que les carac mais avec les compétences
+    # TODO faire la liste des competences
+    :ratio:
+    :min:
+    :max:
+:tactique:
+  # les tactiques seront dans un autre fichier
+  # ici seront les variables pour définir quels tactique utiliser
+:mission:
+  # a voir

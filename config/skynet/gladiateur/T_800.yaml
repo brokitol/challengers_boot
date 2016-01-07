@@ -1,0 +1,66 @@
+---
+:creation:
+    :gender: M
+    :description: "robots de recherche et destruction de model T-800"
+    :temperament: asocial
+    :carac_privi: PUI
+    :bonus: 1
+    :REF: 5
+    :SOU: 5
+    :PUI: 5
+    :RES: 15
+    :END: 15
+    :ENE: 15
+:objectif:
+  :carac:
+    :ratio:
+      :REF: 0
+      :SOU: 1
+      :PUI: 2
+      :RES: 0
+      :END: 0
+      :ENE: 1
+    :min:
+      :REF: 5
+      :SOU: 20
+      :PUI: 20
+      :RES: 15
+      :END: 15
+      :ENE: 15
+    :max:
+      :REF: 25
+      :SOU: -1
+      :PUI: -1
+      :RES: 25
+      :END: 25
+      :ENE: 50
+  :equip:
+    :ratio:
+      :REF: 1
+      :SOU: 2
+      :PUI: 3
+      :RES: 1
+      :END: 2
+    :min:
+      :REF: 5
+      :SOU: 25
+      :PUI: 25
+      :RES: 20
+      :END: 20
+    :max:
+      :REF: -1
+      :SOU: -1
+      :PUI: -1
+      :RES: -1
+      :END: -1
+  :comp:
+    #même chose que les carac mais avec les compétences
+    # TODO faire la liste des competences
+    :ratio:
+    :min:
+    :max:
+:tactique:
+  # les tactiques seront dans un autre fichier
+  # ici seront les variables pour définir quels tactique utiliser
+:mission:
+  # a voir

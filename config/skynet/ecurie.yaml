@@ -1,0 +1,46 @@
+---
+:login: skynet
+:mdp: "13891bob"
+:creation:
+  # la création demande une validation du mail avant de pouvoir faire quoi que ce sois. Donc la création auto est vraiment utile ?
+  :create: 'true' # indique si le compte doit être crée dans le cas ou il n'existe pas
+  :mail: lala@la.la # mail utilisé pour le formulaire de création
+  :description: "une description" # nom donnée a la nouvelle ecurie
+  :message_forum:
+    :titre: 'teston' # titre du message
+    :message: 'test 1 2 1 2' # message posté sur le forum lors de la création
+:equipement:
+#contrainte d'achat des équipements
+:tournoi:
+#choix des équipes
+#paramètre de tactique de groupe ?
+:amélioration:
+  :ordre: # ordre dans le quels des amélio sont monté
+    :tactique: 2
+    :combattant: 1
+    :équipement: 3
+  :stockage:
+  # par default surement acheté un emplacement si un glad veux acheté un équipement mais que le coffre est plein
+  # inutile d'acheté sinon
+  :hebergement:
+  # definir les facteurs de décision pour l'achat d'un hébergement
+  # rien acheté d'autre ?
+  # acheté un hébergement après x credit dépensé en équipement ?
+  # acheté dès qu'on a les sous ? (risque de jamais les avoirs pour les derniers niveaux)
+:create_glad: 'true' # indique si le bot doit crée les glad ou pas
+:glad:
+# les glad sont crée dès que possible.
+# il peut y avoir un infinité de glad de paramétré mais une écurie ne peut avoir que 11 glad en même temps max (10 hébèrgement + 1 clan). Ca peut servir pour un évenement ou Mohja change manuellement cette limite pour cette écurie au lieu de devoir crée 36 fois la même. Et pis de toute façon c'est plus simple a gérer pour le bot.
+# si le premier glad meurs, il est recrée a l'identique
+# si le nom ne passe pas, le glad n'est pas crée !!
+# si le modele est 'toto' le bot cherchera le fichier de config 'toto.yaml' dans le repertoire 'gladiateur'
+- :nom: T-800.1.1 # erreur de jeunnesse
+  :modele: T_800
+- :nom: T-802
+  :modele: T_800
+- :nom: T-803
+  :modele: T_800
+#- :nom: pretre_%x # pretre_1
+#  :modele: soigneur
+#- :nom: druide_%x # druide_1
+#  :modele: soigneur2

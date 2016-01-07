@@ -6,11 +6,12 @@ URL_CHALLENGERS = 'http://challengers.mohja.fr/'
 
 require "json"
 require "selenium-webdriver"
+require "yaml"
 
-require_relative 'glad'
+#require_relative 'glad'
 
-@driver = Selenium::WebDriver.for :firefox
-@driver.manage.timeouts.implicit_wait = 30
+#@driver = Selenium::WebDriver.for :firefox
+#@driver.manage.timeouts.implicit_wait = 30
 
 =begin
 @driver.get(@base_url + "/index.php")
@@ -36,11 +37,13 @@ class Bot
 
 	# point d'entré du bot
 	# @param path [String] chemin vers le fichier de configuration
-	def initialize(path, argument)
+	def initialize(path, argument, driver)
 		raise "le chemin est vide" if path.nil? or path.length <= 0
-		log = "/home/bot/log/bot.log"
+		raise "pas de driver" if driver.nil?
+		log = "./log/bot.log"
 		@log_file = open(log, "a")
 		@argument = argument
+		@driver = driver
 
 		config(path)
 	end
@@ -77,22 +80,10 @@ class Bot
 		gestion_écurie()
 		#		achat hébergement
 		#		gestion amélioration
+		@driver.quit
 	end
-=begin
-@driver.find_element(:id, "challenger_login").clear
-@driver.find_element(:id, "challenger_login").send_keys "skynet"
-@driver.find_element(:id, "challenger_pwd").clear
-@driver.find_element(:id, "challenger_pwd").send_keys "13891bob"
-@driver.find_element(:id, "bouton_connexion").click
-@driver.switch_to().frame("iframe_menu")
-@driver.find_element(:css, "#menu_mes_combattants > div").click
-@driver.find_element(:link, "T-803").click
-@driver.switch_to().default_content()
-@driver.switch_to().frame("iframe_principale")
-@driver.find_element(:id, "link_onglet_entrainements").click
-@driver.find_element(:id, "link_onglet_equipements").click
-=end
-	def gestion_glad(acceuil)
+
+	def gestion_glad()
 		# commence par innitialiser les glads en faisant leur liste
 		@driver.switch_to().frame("iframe_menu")
 		@driver.find_element(:css, "#menu_mes_combattants > div").click
@@ -105,7 +96,8 @@ class Bot
 				achat_glad(c[:modele], acceuil, c[:nom]) unless existe
 			else
 				glad.push get_glad(c)
-				puts "#{c[:modele]}, #{c[:nom]}"}
+				puts "#{c[:modele]}, #{c[:nom]}"
+			end
 		end
 		puts "----------"
 
@@ -121,16 +113,16 @@ class Bot
 	end
 
 	# cette fonction gère l'écurie a propement parlé
-	def gestion_écurie(acceuil)
+	def gestion_écurie()
 		# gestion des groupe de fan
 		# achat hébergement
-		while achat_hébergement(acceuil);end # tourne en boucle
+		while achat_hébergement();end # tourne en boucle
 		# gestion des améliorations
 		gestion_améliorations()
 		# gestion de l'apparence
 	end
 
-	def achat_hébergement(acceuil)
+	def achat_hébergement()
 		@driver.switch_to().frame("iframe_menu")
 		@driver.find_element(:css, "#menu_mon_ecurie > div").click
 		@driver.switch_to().default_content()
@@ -169,26 +161,37 @@ class Bot
 	# @param path [String] le chemin vers le fichier yaml décrivant le glad
 	# @return [Boolean] si l'achat est réussi ou pas
 	def achat_glad(file_name, acceuil, nom)
+
+		# ERROR: Caught exception [ERROR: Unsupported command [selectWindow | name=iframe_principale | ]]
+		@driver.find_element(:xpath, "//table[2]/tbody/tr/td").click
+		@driver.find_element(:css, "select[name=\"liste_carac_privilegiee\"] > option[value=\"4\"]").click
+		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_bonus")).select_by(:text, "90 points de voie (dans une voie au hasard)")
+
+
 		config = YAML.load(open("#{@global_path}/gladiateur/#{file_name}.yaml"))[:creation]
 		menu = acceuil.iframe_with(:src => "./menu.php").click
 		page_ecurie = menu.link_with(:href => "./ecurie_gestion.php").click
+
+		@driver.find_element(:css, "div.tableau_td_formulaire").click
+		close_alert_and_get_its_text().should =~ /^Acheter un nouveau combattant [\s\S]$/
+
 		form_creation = page_ecurie.form_with(:name => "formcreercombattant")
 		return false if form_creation.nil? # imposible de créer un glad
 		page_creation = form_creation.submit
 		form = page_creation.form_with(:name => "formcombattantnew")
-		form.combattant_nom = nom
+		tmp = @driver.find_element(:name, "combattant_nom"); tmp.clear; tmp.send_keys nom
 		# TODO gérer le cas ou la somme ne convient pas
-		form.Reflexe		= config[:REF]
-		form.Souplesse	= config[:SOU]
-		form.Puissance	= config[:PUI]
-		form.Resistance	= config[:RES]
-		form.Endurance	= config[:END]
-		form.Energie		= config[:ENE]
-		form.combattant_description = config[:description]
-		form.field_with(:name => "liste_sexe").option_with(:text => config[:gender]).click
-		form.field_with(:name => "liste_temperament").option_with(:text => config[:temperament]).click
-		form.field_with(:name => "liste_carac_privilegiee").option_with(:text => config[:carac_privi]).click
-		form.liste_bonus = config[:bonus]
+		tmp = @driver.find_element(:name, "Reflexe");				tmp.clear; tmp.send_keys config[:REF]
+		tmp = @driver.find_element(:name, "Souplesse");				tmp.clear; tmp.send_keys config[:SOU]
+		tmp = @driver.find_element(:name, "Puissance");				tmp.clear; tmp.send_keys config[:PUI]
+		tmp = @driver.find_element(:name, "Resistance");			tmp.clear; tmp.send_keys config[:RES]
+		tmp = @driver.find_element(:name, "Endurance");				tmp.clear; tmp.send_keys config[:END]
+		tmp = @driver.find_element(:name, "Energie");				tmp.clear; tmp.send_keys config[:ENE]
+		tmp = @driver.find_element(:name, "combattant_description"); tmp.clear; tmp.send_keys config[:description]
+		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_sexe")).select_by(:text, config[:gender])
+		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_temperament")).select_by(:text, config[:temperament])
+		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_carac_privilegiee")).select_by(:text, config[:carac_privi])
+		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_bonus")).select_by(:text, config[:bonus]) #revoir les valeur de ce choix 
 		form.submit
 		log("achat gladiateur #{nom}:#{file_name}")
 		return true
@@ -198,6 +201,8 @@ class Bot
 	# @param login [String] le login
 	# @param mdp [String] le mots de passe
 	def connexion(login, mdp)
+		@driver ||= Selenium::WebDriver.for :firefox
+		@driver.manage.timeouts.implicit_wait = 30
 		@driver.get(URL_CHALLENGERS + "/index.php")
 		@driver.find_element(:id, "challenger_login").clear
 		@driver.find_element(:id, "challenger_login").send_keys login
