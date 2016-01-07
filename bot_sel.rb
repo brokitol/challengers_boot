@@ -84,6 +84,7 @@ class Bot
 	end
 
 	def gestion_glad()
+		log("debut gestion glad")
 		# commence par innitialiser les glads en faisant leur liste
 		@driver.switch_to().frame("iframe_menu")
 		@driver.find_element(:css, "#menu_mes_combattants > div").click
@@ -92,8 +93,11 @@ class Bot
 
 		# achette de nouveau glad si certain manque a l'appel
 		@config[:glad].each do |c|
-			if not @driver.find_element(:link, c[:nom])
-				achat_glad(c[:modele], acceuil, c[:nom]) unless existe
+			log("glad suivant")
+			begin
+				@driver.find_element(:link, c[:nom])
+  			rescue Selenium::WebDriver::Error::NoSuchElementError
+				achat_glad(c[:modele], c[:nom])
 			else
 				glad.push get_glad(c)
 				puts "#{c[:modele]}, #{c[:nom]}"
@@ -103,6 +107,7 @@ class Bot
 
 		# pour chaque glad a partir du premier, le fait tourner en automatique
 		glad.each {|g| g.run}
+		log("fin gestion glad")
 	end
 
 	# Cette fonction retourne un objet de type gladiateur qui est initialisé a partir de la config fournit
@@ -123,6 +128,7 @@ class Bot
 	end
 
 	def achat_hébergement()
+		log("tentative d'achat hebergement")
 		@driver.switch_to().frame("iframe_menu")
 		@driver.find_element(:css, "#menu_mon_ecurie > div").click
 		@driver.switch_to().default_content()
@@ -159,27 +165,22 @@ class Bot
 
 	# Cette fonction achette un nouveau glad en utilisant les paramettres fournit
 	# @param path [String] le chemin vers le fichier yaml décrivant le glad
+	# @param path [nom] le nom du glad
 	# @return [Boolean] si l'achat est réussi ou pas
-	def achat_glad(file_name, acceuil, nom)
+	def achat_glad(file_name, nom)
 
-		# ERROR: Caught exception [ERROR: Unsupported command [selectWindow | name=iframe_principale | ]]
-		@driver.find_element(:xpath, "//table[2]/tbody/tr/td").click
-		@driver.find_element(:css, "select[name=\"liste_carac_privilegiee\"] > option[value=\"4\"]").click
-		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_bonus")).select_by(:text, "90 points de voie (dans une voie au hasard)")
-
+		@driver.switch_to().default_content()
+		@driver.switch_to().frame("iframe_menu")
+		@driver.find_element(:css, "#menu_mon_ecurie > div").click
+		@driver.switch_to().default_content()
+		@driver.switch_to().frame("iframe_principale")
+		@driver.find_element(:css, "div.tableau_td_formulaire > span").click
+		@driver.switch_to().alert().accept()
 
 		config = YAML.load(open("#{@global_path}/gladiateur/#{file_name}.yaml"))[:creation]
-		menu = acceuil.iframe_with(:src => "./menu.php").click
-		page_ecurie = menu.link_with(:href => "./ecurie_gestion.php").click
 
-		@driver.find_element(:css, "div.tableau_td_formulaire").click
-		close_alert_and_get_its_text().should =~ /^Acheter un nouveau combattant [\s\S]$/
-
-		form_creation = page_ecurie.form_with(:name => "formcreercombattant")
-		return false if form_creation.nil? # imposible de créer un glad
-		page_creation = form_creation.submit
-		form = page_creation.form_with(:name => "formcombattantnew")
 		tmp = @driver.find_element(:name, "combattant_nom"); tmp.clear; tmp.send_keys nom
+		log(nom)
 		# TODO gérer le cas ou la somme ne convient pas
 		tmp = @driver.find_element(:name, "Reflexe");				tmp.clear; tmp.send_keys config[:REF]
 		tmp = @driver.find_element(:name, "Souplesse");				tmp.clear; tmp.send_keys config[:SOU]
@@ -191,9 +192,10 @@ class Bot
 		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_sexe")).select_by(:text, config[:gender])
 		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_temperament")).select_by(:text, config[:temperament])
 		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_carac_privilegiee")).select_by(:text, config[:carac_privi])
-		Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_bonus")).select_by(:text, config[:bonus]) #revoir les valeur de ce choix 
-		form.submit
+		#Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "liste_bonus")).select_by(:text, config[:bonus]) #TODO revoir les valeur de ce choix 
 		log("achat gladiateur #{nom}:#{file_name}")
+		@driver.find_element(:id, "Bouton_valider").click
+		@driver.switch_to().alert().accept()
 		return true
 	end
 
@@ -202,7 +204,6 @@ class Bot
 	# @param mdp [String] le mots de passe
 	def connexion(login, mdp)
 		@driver ||= Selenium::WebDriver.for :firefox
-		@driver.manage.timeouts.implicit_wait = 30
 		@driver.get(URL_CHALLENGERS + "/index.php")
 		@driver.find_element(:id, "challenger_login").clear
 		@driver.find_element(:id, "challenger_login").send_keys login

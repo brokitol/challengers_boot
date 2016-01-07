@@ -34,11 +34,11 @@
 # si le premier glad meurs, il est recrée a l'identique
 # si le nom ne passe pas, le glad n'est pas crée !!
 # si le modele est 'toto' le bot cherchera le fichier de config 'toto.yaml' dans le repertoire 'gladiateur'
-- :nom: T-800.1.1 # erreur de jeunnesse
+- :nom: T801
   :modele: T_800
-- :nom: T-802
+- :nom: T802
   :modele: T_800
-- :nom: T-803
+- :nom: T-803 # tiret plus valide. a supprimer quant il meur
   :modele: T_800
 #- :nom: pretre_%x # pretre_1
 #  :modele: soigneur

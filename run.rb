@@ -3,7 +3,7 @@
 require_relative 'bot_sel'
 
 driver = Selenium::WebDriver.for :firefox
-driver.manage.timeouts.implicit_wait = 30
+driver.manage.timeouts.implicit_wait = 2
 
 argument = {} 
 ARGV.each do |a|
