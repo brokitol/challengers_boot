@@ -8,7 +8,7 @@ require "json"
 require "selenium-webdriver"
 require "yaml"
 
-#require_relative 'glad'
+require_relative 'glad_sel'
 
 #@driver = Selenium::WebDriver.for :firefox
 #@driver.manage.timeouts.implicit_wait = 30
@@ -114,7 +114,7 @@ class Bot
 	# @param config [Array] la config du glad
 	# @return [Glad] un objet de type glad si il existe dans l'écurie courrante
 	def get_glad(config)
-		return Glad.new(@global_path, config[:modele], config[:nom], @argument, @log_file)
+		return Glad.new(@global_path, config[:modele], config[:nom], @driver, @argument, @log_file)
 	end
 
 	# cette fonction gère l'écurie a propement parlé
