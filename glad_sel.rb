@@ -59,12 +59,12 @@ class Glad
 	# puis les missions
 	# puis les tactiques
 	def run
-		init_current(get_page())
+		#init_current(get_page())
 		competence(get_page())
-		entrainement(get_page())
-		equipement(get_page())
-		mission(get_page())
-		tactique(get_page())
+		#entrainement(get_page())
+		#equipement(get_page())
+		#mission(get_page())
+		#tactique(get_page())
 	end
 
 	# initie le dico @current avec les valeurs du gladiateur
@@ -153,6 +153,13 @@ class Glad
 	# le choix des tactiques est prioritaire pour les voies actives si un combat a lieu le soir
 	#	le tout en ce basant sur la config
 	def competence(page)
+		d = @driver.find_element(:css, "#onglet_voies > form:nth-child(1) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(5) > input:nth-child(1)")
+		#@driver.find_element(:css, "form[name=\"formvoie_selection\"] > input.css_button_valider").click
+
+		puts "[#{d.text}]"
+		puts "[#{d.selected?}]"
+		puts "[#{d.class}]"
+
 	end
 
 	# Cette fonction dépense l'xp des carac

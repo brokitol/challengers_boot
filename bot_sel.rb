@@ -129,14 +129,19 @@ class Bot
 
 	def achat_hébergement()
 		log("tentative d'achat hebergement")
+		@driver.switch_to().default_content()
 		@driver.switch_to().frame("iframe_menu")
 		@driver.find_element(:css, "#menu_mon_ecurie > div").click
 		@driver.switch_to().default_content()
 		@driver.switch_to().frame("iframe_principale")
-		@driver.find_element(:css, "form[name=\"formagrandirhebergement\"] > img").click
-		#return false if form.nil?
-		#log("achat hebergement")
-		#return true
+		begin
+			@driver.find_element(:css, "form[name=\"formagrandirhebergement\"] > img").click
+		rescue
+			return false
+		else
+			log("achat hebergement")
+			return true
+		end
 	end
 
 	def log(str)

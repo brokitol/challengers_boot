@@ -1,4 +1,9 @@
 ---
+#min =	valeur minimal que doit avoir la carac/comp/etc...
+#max =	valeur maximal que ne doit pas depasser la carac/comp/etc...
+#ratio =	vitesse a la quels doit monter cette carac/comp/etc par rapport au autre.
+#			une valeur <= 0 n'est pas pris en compte, ie. la carac/comp/etc associé ne sera pas monté au-dessus de la valeur min
+#exemple : ref : 1, sou 5, pui 17. le bot cherchera a garder le reflexe 17x plus petit que la puissance. et la souplesse environ 3.4x plus petit que la puissance
 :creation:
     :gender: M
     :description: "robots de recherche et destruction de model T-800"
@@ -56,6 +61,194 @@
   :comp:
     #même chose que les carac mais avec les compétences
     # TODO faire la liste des competences
+	:SURVIE:
+    	:ratio: 0
+    	:min: 0
+    	:max: 0
+		:SPE1: 1
+		:SPE2: 1
+    survie
+    spécialité n°1 increvable
+    spécialité n°1 robustesse
+    spécialité n°2 increvable
+    spécialité n°2 résistance
+    spécialité n°2 intégrité
+Survie
+
+    survie
+    spécialité n°1 increvable
+    spécialité n°1 robustesse
+    spécialité n°2 increvable
+    spécialité n°2 résistance
+    spécialité n°2 intégrité
+
+    déstructuration
+    spécialité n°1 déliquescence
+    spécialité n°1 fatigue
+    spécialité n°2 corruption ultime
+    spécialité n°2 grande fatigue
+
+    soigner normalement
+    spécialité n°1 soins améliorés
+    spécialité n°1 regain
+    spécialité n°2 soins améliorés
+    spécialité n°2 regain
+
+    soigner en profondeur
+    spécialité n°1 extension vitale
+    spécialité n°1 renforcement
+    spécialité n°2 soins miraculeux
+    spécialité n°2 vigilance
+
+    influencer en parant
+    spécialité n°1 parade améliorée
+    spécialité n°1 rémanence
+    spécialité n°1 harassement
+    spécialité n°2 parade améliorée
+    spécialité n°2 rémanence
+    spécialité n°2 harassement
+
+
+Défense
+
+    durcissement
+    spécialité n°1 peau de pierre
+    spécialité n°1 robustesse
+    spécialité n°2 peau de pierre
+    spécialité n°2 infatiguable
+
+    force mentale
+    spécialité n°1 Imperturbable
+    spécialité n°1 stabilité
+    spécialité n°1 réalisme
+    spécialité n°2 volonté suprême
+    spécialité n°2 stabilité suprême
+    spécialité n°2 grand réalisme
+
+    attaquer prudemment
+    spécialité n°1 insaisissable
+    spécialité n°1 précision
+    spécialité n°1 second souffle
+    spécialité n°2 insaisissable
+    spécialité n°2 puissance
+    spécialité n°2 en retrait
+
+    soigner sans m'exposer
+    spécialité n°1 refuge
+    spécialité n°1 soins amélioré
+    spécialité n°2 refuge
+    spécialité n°2 en retrait
+
+    influencer en couvrant
+    spécialité n°1 synchronissime
+    spécialité n°1 couverture parfaite
+    spécialité n°2 double rémanance
+    spécialité n°2 à couvert
+
+Illusion
+
+    dédoublement
+    spécialité n°1 contour flou
+    spécialité n°1 image miroir
+    spécialité n°2 mouvements flous
+    spécialité n°2 image miroir
+
+    homoncule
+    spécialité n°1 agrandissement
+    spécialité n°1 durée accrue
+    spécialité n°2 agrandissement
+    spécialité n°2 durée accrue
+
+    influencer en raillant
+    spécialité n°1 distraction
+    spécialité n°1 détournement
+    spécialité n°2 distraction
+    spécialité n°2 détournement
+
+    influencer en feintant
+    spécialité n°1 botte secrète
+    spécialité n°1 feinte de corps
+    spécialité n°2 déstabilisation ultime
+    spécialité n°2 rémanence
+
+    influencer en perturbant
+    spécialité n°1 botte secrète
+    spécialité n°1 cible parfaite
+    spécialité n°2 déstabilisation ultime
+    spécialité n°2 rémanence
+
+Temps
+
+
+    anticipation
+    spécialité n°1 réflexes brutaux
+    spécialité n°1 réflexe de défense
+    spécialité n°2 projection temporelle
+    spécialité n°2 réflexe offensifs
+
+    vieillissement
+    spécialité n°1 flétrissement
+    spécialité n°1 rajeunissement
+    spécialité n°2 sclérose
+    spécialité n°2 cure de jouvence
+
+    attaquer comme l'éclair
+    spécialité n°1 vitesse accrue
+    spécialité n°1 précision
+    spécialité n°1 insaisissable
+    spécialité n°2 vitesse accrue
+    spécialité n°2 puissance
+    spécialité n°2 tournis
+
+    soigner rapidement
+    spécialité n°1 vitesse accrue
+    spécialité n°1 soins améliorés
+    spécialité n°2 vitesse accrue
+    spécialité n°2 insaisissable
+
+    se reposer efficacement
+    spécialité n°1 récupération améliorée
+    spécialité n°1 contre-parade
+    spécialité n°2 récupération améliorée
+    spécialité n°2 temps compressé
+
+Lames
+
+    maniement
+    spécialité n°1 précision
+    spécialité n°1 parade
+    spécialité n°2 puissance
+    spécialité n°2 aisance
+
+    champ électrique
+    spécialité n°1 champ renforcé
+    spécialité n°1 engourdissement
+    spécialité n°2 arc électrique
+    spécialité n°2 paralysie
+
+    attaquer à fond
+    spécialité n°1 précision
+    spécialité n°1 puissance
+    spécialité n°1 corps d'acier
+    spécialité n°2 précision
+    spécialité n°2 puissance
+    spécialité n°2 âme de berserker
+
+    attaquer avec précision
+    spécialité n°1 finesse
+    spécialité n°1 puissance
+    spécialité n°1 vivacité
+    spécialité n°2 finesse
+    spécialité n°2 puissance
+    spécialité n°2 point vital
+
+    attaquer brutalement
+    spécialité n°1 force pure
+    spécialité n°1 précision
+    spécialité n°1 effroi
+    spécialité n°2 force pure
+    spécialité n°2 destructeur
+    spécialité n°2 destabilisation
     :ratio:
     :min:
     :max:
